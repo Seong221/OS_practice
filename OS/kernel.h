@@ -1,5 +1,6 @@
 #pragma once
 
+#define PAGE_SIZE 4096
 #define PANIC(fmt, ...)                                                      \
    do {                                                                      \
        printf("PANIC: %s:%d: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); \
@@ -58,7 +59,7 @@ struct trap_frame {
 #define WRITE_CSR(reg, value)                                                              \
     do {                                                                                   \
      uint32_t __tmp=(value);                                                               \
-     __asm__ __volatile__("csrw" #reg ", %0" ::"r"(__tmp));                               \
+     __asm__ __volatile__("csrw " #reg ", %0" ::"r"(__tmp));                               \
     } while (0)
 
 
