@@ -1,5 +1,9 @@
 #pragma once
 
+#define PROCS_MAX 8      //Maximum number of processes
+
+#define PROC_UNUSED    0  //Unused process control structure
+#define PROC_RUNNABLE  1  //Runnable process
 #define PAGE_SIZE 4096
 #define PANIC(fmt, ...)                                                      \
    do {                                                                      \
@@ -13,6 +17,14 @@ struct sbiret{
     long error;
     long value;
 };
+
+struct process {
+    int pid;      //process ID
+    int state;    //Process state : PROC_UNUSED or PROC_RUNNABLE
+    vaddr_t sp;   //Stack pointer
+    uint8_t stack[8192];  //Kernel Stack
+};
+
 
 struct trap_frame {
    uint32_t ra;
