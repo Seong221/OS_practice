@@ -41,6 +41,7 @@ struct process *create_process(uint32_t pc) {
      }
   }
 
+
    if(!proc)
      PANIC("no free process slots");
 
@@ -180,18 +181,50 @@ void kernel_entry(void) {
    );
 }
 
+void delay(void) {
+   for (int i=0; i<30000000; i++) 
+     __asm__ __volatile__("nop"); //do nothing
+}
+
+
+struct process *proc_a;
+struct process *proc_b;
+
+void proc_a_entry(void) {
+  printf("starting process A\n")
+  while(1){
+   putchar('A');
+   switch_context(&proc_a->sp, &proc_b->sp);
+   delay();}
+}
+
+void proc_b_entry(void) {
+   printf("starting process B \n");
+   while (1) {
+    putchar('B');
+    switch_context(&proc_b->sp, &proc_a->sp);
+    delay();
+   }
+}
+
 void kernel_main(void) {
     memset(__bss, 0, (size_t)__bss_end-(size_t)__bss);
 
    // printf("\n\nHello %s\n", "World!");
    // printf("1+2=%d, %x\n", 1+2, 0x1234abcd);
-   paddr_t paddr0 = alloc_pages(2);
-   paddr_t paddr1 = alloc_pages(1);
-   printf("alloc_pages test: paddr0=%x\n", paddr0);
-   printf("alloc_pages test: paddr1=%x\n", paddr1);
-   // WRITE_CSR(stvec, (uint32_t) kernel_entry);
+   //paddr_t paddr0 = alloc_pages(2);
+   //paddr_t paddr1 = alloc_pages(1);
+   //printf("alloc_pages test: paddr0=%x\n", paddr0);
+   //printf("alloc_pages test: paddr1=%x\n", paddr1);
+    WRITE_CSR(stvec, (uint32_t) kernel_entry);
+    proc_a = create_process((uint32_t) proc_a_entry);
+    proc_b = create_process((uint32_t) proc_b_entry);
+    proc_a_entry();
+
+    PANIC("unreachable here!");
+
    // __asm__ __volatile__("unimp");
-   PANIC("booted!");
+    PANIC("booted!");
    //printf("unreachable here!\n");
 
 
@@ -230,7 +263,7 @@ __attribute__((naked)) void switch_context(uint32_t *prev_sp,
     "sw s11, 12 * 4 (sp)\n"
 
 
-    //Switch the stack pointer.
+                       //Switch the stack pointer.
     "sw sp, (a0)\n"     //*prev_sp = sp;
     "lw sp, (a1)\n"    //Switch stack pointer(sp) here
 
@@ -252,3 +285,6 @@ __attribute__((naked)) void switch_context(uint32_t *prev_sp,
     "ret\n"
    );
 }
+
+
+
