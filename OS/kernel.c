@@ -89,9 +89,9 @@ paddr_t alloc_pages(uint32_t n) {
   return paddr;
 }
 
-void user_entry(void){
-  PANIC("not yet implemented");
-}
+//void user_entry(void){
+  //PANIC("not yet implemented");
+//}
 
 
 void map_page(uint32_t *table1, uint32_t vaddr, paddr_t paddr, uint32_t flags) {
@@ -114,7 +114,16 @@ void map_page(uint32_t *table1, uint32_t vaddr, paddr_t paddr, uint32_t flags) {
 }
 
 
-
+__attribute__((naked)) void user_entry(void) {
+  __asm__ __volatile__(
+    "csrw sepc, %[sepc]         \n"
+    "csrw sstatus, %[sstatus]   \n"
+    "sret                       \n"
+    :
+    :[sepc] "r" (USER_BASE),
+     [sstatus] "r" (SSTATUS_SPIE)
+  );
+}
 
 
 struct process *create_process(const void *image, size_t image_size){
@@ -184,6 +193,20 @@ struct process *create_process(const void *image, size_t image_size){
 void putchar(char ch) {
      sbi_call(ch, 0, 0, 0, 0, 0, 0, 1 /* Console Putchar */);
 }
+
+
+
+void handle_syscall(struct trap_frame *f) {
+  switch(f->a3){
+    case SYS_PUTCHAR:
+       putchar(f->a0);
+       break;
+    default:
+       PANIC("unexpected syscall a3=%x\n", f->a3);
+
+  }
+}
+
 
 void yield(void){
    //Search for runnable process
@@ -344,16 +367,6 @@ void proc_b_entry(void) {
    }
 }
 
-__attribute__((naked)) void user_entry(void) {
-  __asm__ __volatile__(
-    "csrw sepc, %[sepc]         \n"
-    "csrw sstatus, %[sstatus]   \n"
-    "sret                       \n"
-    :
-    :[sepc] "r" (USER_BASE),
-     [sstatus] "r" ((SSTATUS_SPIE))
-  );
-}
 
 
 void kernel_main(void) {
@@ -392,12 +405,17 @@ for (;;) {
 
 void handle_trap(struct trap_frame *f) {
    uint32_t scause=READ_CSR(scause);
-
-   
-
    uint32_t stval=READ_CSR(stval);
    uint32_t user_pc = READ_CSR(sepc);
 
+
+   if(scause==SCAUSE_ECALL) {
+    handle_syscall(f);
+    user_pc+=4;
+   }else{
    PANIC("unexpected trap scause=%x, stval=%x, sepc=%x\n", scause, stval, user_pc);
-}
+   }
+
+   WRITE_CSR(sepc, user_pc);
+  }
 

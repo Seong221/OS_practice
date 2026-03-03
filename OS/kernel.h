@@ -10,8 +10,9 @@
 #define PAGE_W (1<<2) //Writable
 #define PAGE_X (1<<3) //Executable
 #define PAGE_U (1<<4) // User(accessible in user mode)
+#define SCAUSE_ECALL 8
 
-#define SSTATUS_SPITE (1<<5)
+#define SSTATUS_SPIE (1 << 5)
 #define PROC_UNUSED    0  //Unused process control structure
 #define PROC_RUNNABLE  1  //Runnable process
 #define PAGE_SIZE 4096
