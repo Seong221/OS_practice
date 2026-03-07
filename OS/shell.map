@@ -1,7 +1,7 @@
      VMA      LMA     Size Align Out     In      Symbol
        0        0  1000000     1 . = 0x1000000
  1000000  1000000      272     2 .text
- 1000000  1000000        e     2         /tmp/user-0a6761.o:(.text.start)
+ 1000000  1000000        e     2         /tmp/user-839754.o:(.text.start)
  1000000  1000000        0     1                 
  1000000  1000000        0     1                 
  1000000  1000000        0     1                 $x.1
@@ -9,7 +9,7 @@
  1000000  1000000        e     1                 start
  100000e  100000e        0     1                 
  100000e  100000e        0     1                 
- 100000e  100000e       1c     2         /tmp/shell-ab7260.o:(.text)
+ 100000e  100000e       1c     2         /tmp/shell-314464.o:(.text)
  100000e  100000e        0     1                 
  100000e  100000e        0     1                 
  100000e  100000e        0     1                 $x.0
@@ -23,7 +23,7 @@
  1000028  1000028        0     1                 
  100002a  100002a        0     1                 
  100002a  100002a        0     1                 
- 100002a  100002a       1e     2         /tmp/user-0a6761.o:(.text)
+ 100002a  100002a       1e     2         /tmp/user-839754.o:(.text)
  100002a  100002a        0     1                 
  100002a  100002a        0     1                 
  100002a  100002a        0     1                 .LBB0_1
@@ -52,7 +52,7 @@
  1000046  1000046        0     1                 
  1000046  1000046        0     1                 
  1000048  1000048        0     1                 
- 1000048  1000048      22a     2         /tmp/common-e0a703.o:(.text)
+ 1000048  1000048      22a     2         /tmp/common-df2493.o:(.text)
  1000048  1000048        0     1                 
  1000048  1000048        0     1                 
  1000048  1000048        0     1                 $x.0
@@ -288,18 +288,18 @@
  10102a0  10102a0        0     1         __stack_top = .
  10102a0  10102a0        0     1         
        0        0      2c1     1 .debug_abbrev
-       0        0       9c     1         /tmp/shell-ab7260.o:(.debug_abbrev)
+       0        0       9c     1         /tmp/shell-314464.o:(.debug_abbrev)
        0        0        0     1                 $d.2
-      9c       9c       fd     1         /tmp/user-0a6761.o:(.debug_abbrev)
+      9c       9c       fd     1         /tmp/user-839754.o:(.debug_abbrev)
       9c       9c        0     1                 $d.3
-     199      199      128     1         /tmp/common-e0a703.o:(.debug_abbrev)
+     199      199      128     1         /tmp/common-df2493.o:(.debug_abbrev)
      199      199        0     1                 $d.3
        0        0      535     1 .debug_info
-       0        0       92     1         /tmp/shell-ab7260.o:(.debug_info)
+       0        0       92     1         /tmp/shell-314464.o:(.debug_info)
        0        0        0     1                 $d.3
-      92       92      178     1         /tmp/user-0a6761.o:(.debug_info)
+      92       92      178     1         /tmp/user-839754.o:(.debug_info)
       92       92        0     1                 $d.4
-     20a      20a      32b     1         /tmp/common-e0a703.o:(.debug_info)
+     20a      20a      32b     1         /tmp/common-df2493.o:(.debug_info)
      20a      20a        0     1                 $d.4
        0        0      175     1 .debug_str
        0        0      175     1         <internal>:(.debug_str)
@@ -308,27 +308,27 @@
        0        0       2b     1 .riscv.attributes
        0        0       2b     1         <internal>:(.riscv.attributes)
        0        0      104     4 .debug_frame
-       0        0       2c     4         /tmp/shell-ab7260.o:(.debug_frame)
+       0        0       2c     4         /tmp/shell-314464.o:(.debug_frame)
        0        0        0     1                 
        0        0        0     1                 $d.7
-      2c       2c       54     4         /tmp/user-0a6761.o:(.debug_frame)
+      2c       2c       54     4         /tmp/user-839754.o:(.debug_frame)
       2c       2c        0     1                 
       2c       2c        0     1                 $d.9
-      80       80       84     4         /tmp/common-e0a703.o:(.debug_frame)
+      80       80       84     4         /tmp/common-df2493.o:(.debug_frame)
       80       80        0     1                 
       80       80        0     1                 $d.9
        0        0      4a4     1 .debug_line
-       0        0       66     1         /tmp/shell-ab7260.o:(.debug_line)
+       0        0       66     1         /tmp/shell-314464.o:(.debug_line)
        0        0        0     1                 .Lline_table_start0
        0        0        0     1                 $d.8
-      66       66       7a     1         /tmp/user-0a6761.o:(.debug_line)
+      66       66       7a     1         /tmp/user-839754.o:(.debug_line)
       66       66        0     1                 .Lline_table_start0
       66       66        0     1                 $d.10
-      e0       e0      3c4     1         /tmp/common-e0a703.o:(.debug_line)
+      e0       e0      3c4     1         /tmp/common-df2493.o:(.debug_line)
       e0       e0        0     1                 .Lline_table_start0
       e0       e0        0     1                 $d.10
        0        0      44c     1 .debug_loc
-       0        0      161     1         /tmp/user-0a6761.o:(.debug_loc)
+       0        0      161     1         /tmp/user-839754.o:(.debug_loc)
        0        0        0     1                 
        0        0        0     1                 $d.2
       31       31        0     1                 
@@ -339,7 +339,7 @@
       ef       ef        0     1                 
      115      115        0     1                 
      146      146        0     1                 
-     161      161      2eb     1         /tmp/common-e0a703.o:(.debug_loc)
+     161      161      2eb     1         /tmp/common-df2493.o:(.debug_loc)
      161      161        0     1                 
      161      161        0     1                 $d.2
      17f      17f        0     1                 
@@ -359,10 +359,10 @@
      403      403        0     1                 
      439      439        0     1                 
        0        0       38     1 .debug_ranges
-       0        0       20     1         /tmp/user-0a6761.o:(.debug_ranges)
+       0        0       20     1         /tmp/user-839754.o:(.debug_ranges)
        0        0        0     1                 
        0        0        0     1                 $d.5
-      20       20       18     1         /tmp/common-e0a703.o:(.debug_ranges)
+      20       20       18     1         /tmp/common-df2493.o:(.debug_ranges)
       20       20        0     1                 
       20       20        0     1                 $d.5
        0        0     1760     4 .symtab

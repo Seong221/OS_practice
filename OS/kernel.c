@@ -115,6 +115,7 @@ void map_page(uint32_t *table1, uint32_t vaddr, paddr_t paddr, uint32_t flags) {
 
 
 __attribute__((naked)) void user_entry(void) {
+
   __asm__ __volatile__(
     "csrw sepc, %[sepc]         \n"
     "csrw sstatus, %[sstatus]   \n"
@@ -171,8 +172,6 @@ struct process *create_process(const void *image, size_t image_size){
    proc->pid = i+1;
    proc->state = PROC_RUNNABLE;
    proc->sp = (uint32_t) sp;
-   proc -> page_table = page_table;
-   return proc;
    
    //Map user pages
    for(uint32_t off=0; off<image_size; off+=PAGE_SIZE) {
@@ -188,6 +187,11 @@ struct process *create_process(const void *image, size_t image_size){
     map_page(page_table, USER_BASE + off, page,
             PAGE_U | PAGE_R | PAGE_W | PAGE_X);
    }
+   
+  //added code 'printf' to verify slot finding
+   printf("Process %d created at %p, size %d\n", i+1, image, image_size);
+   proc -> page_table = page_table;
+   return proc;
 }
 
 void putchar(char ch) {
@@ -404,6 +408,11 @@ for (;;) {
 
 
 void handle_trap(struct trap_frame *f) {
+
+   //This is for debugging. 
+   printf("DEBUG: Trap detected! scause=%x, sepc=%x\n", READ_CSR(scause), READ_CSR(sepc));
+   printf("PANIC: Store Fault! stval = %x, sepc = %x\n", READ_CSR(stval), READ_CSR(sepc));
+
    uint32_t scause=READ_CSR(scause);
    uint32_t stval=READ_CSR(stval);
    uint32_t user_pc = READ_CSR(sepc);
@@ -413,7 +422,7 @@ void handle_trap(struct trap_frame *f) {
     handle_syscall(f);
     user_pc+=4;
    }else{
-   PANIC("unexpected trap scause=%x, stval=%x, sepc=%x\n", scause, stval, user_pc);
+     PANIC("unexpected trap scause=%x, stval=%x, sepc=%x\n", scause, stval, user_pc);
    }
 
    WRITE_CSR(sepc, user_pc);
